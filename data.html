@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>红树林数字化监测看板</title>
+  <style>
+    /* 重置 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    h1, #currentDateTime { text-align: center; margin-bottom: 16px; }
+    body { font-family: 'Poppins', sans-serif; background: #eefaf2; color: #1b4332; padding: 16px; }
+    .dashboard { display: flex; flex-direction: column; gap: 16px; max-width: 1600px; margin: auto; }
+    #currentDateTime { font-size: 1rem; color: #555; }
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
+    .kpi { background: rgba(255,255,255,0.9); border-radius:8px; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column; justify-content:space-between; }
+    .kpi h3 { font-size:1rem; margin-bottom:8px; }
+    .kpi .value { font-size:2rem; font-weight:bold; margin-bottom:8px; }
+    .spark { width:100%; height:36px; }
+
+    .middle { display:grid; grid-template-columns:2fr 1fr; gap:16px; }
+    .map-container,
+    .trend-container,
+    .chart-container {
+      background: rgba(255,255,255,0.9);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .map-container h2,
+    .trend-container h2,
+    .chart-container h2 {
+      font-size:1.1rem;
+      padding:12px;
+      border-bottom:1px solid #ddd;
+      margin:0;
+    }
+    #map { flex:1; min-height:360px; }
+    #areaChart { flex:1; min-height:180px; }
+
+    .chart-container { min-height:240px; }
+    .chart-container .chart { flex:1; width:100%; height:100%; }
+
+    .bottom { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+
+    @media (max-width: 900px) {
+      .middle { grid-template-columns:1fr; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body>
+  <section class="dashboard">
+    <h1>广东省红树林数字化监测看板</h1>
+    <div id="currentDateTime">当前日期和时间：--</div>
+
+    <!-- 顶部 KPI -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <h3>总红树林面积（千公顷）</h3>
+        <div class="value" id="totalArea">--</div>
+        <div id="spark1" class="spark"></div>
+      </div>
+      <div class="kpi">
+        <h3>较昨日增量（千公顷）</h3>
+        <div class="value" id="deltaArea">--</div>
+        <div id="spark2" class="spark"></div>
+      </div>
+      <div class="kpi">
+        <h3>实时湿度（%）</h3>
+        <div class="value" id="liveHumidity">--</div>
+        <div id="spark3" class="spark"></div>
+      </div>
+      <div class="kpi">
+        <h3>实时温度（℃）</h3>
+        <div class="value" id="liveTemp">--</div>
+        <div id="spark4" class="spark"></div>
+      </div>
+    </div>
+
+    <!-- 中部：地图 + 趋势 -->
+    <div class="middle">
+      <div class="map-container">
+        <h2>广东省红树林分布图</h2>
+        <div id="map"></div>
+      </div>
+      <div class="trend-container">
+        <h2>广东省红树林面积趋势折线图</h2>
+        <div id="areaChart"></div>
+      </div>
+    </div>
+
+    <!-- 底部四图 -->
+    <div class="bottom">
+      <div id="barChart" class="chart-container">
+        <h2>物种数量柱状图</h2>
+        <div class="chart"></div>
+      </div>
+      <div id="pieChart" class="chart-container">
+        <h2>区域占比饼图</h2>
+        <div class="chart"></div>
+      </div>
+      <div id="radarChart" class="chart-container">
+        <h2>保护等级雷达图</h2>
+        <div class="chart"></div>
+      </div>
+      <div id="scatterChart" class="chart-container">
+        <h2>修复点散点图</h2>
+        <div class="chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 更新当前日期和时间
+    function updateDateTime() {
+      const now = new Date();
+      const date = now.toLocaleDateString('zh-CN');
+      const time = now.toLocaleTimeString('zh-CN', { hour12: false });
+      document.getElementById('currentDateTime').innerText = `当前日期和时间：${date} ${time}`;
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const colors = ['#4caf50','#81c784','#a5d6a7','#c8e6c9','#e8f5e9'];
+
+      // Sparkline 初始化
+      function initSpark(id, data, color) {
+        const chart = echarts.init(document.getElementById(id));
+        chart.setOption({
+          grid: { left:0, right:0, top:0, bottom:0 },
+          xAxis: { type:'category', show:false, data: data.map((_,i)=>i) },
+          yAxis: { type:'value', show:false },
+          series: [{
+            type:'line', data, smooth:true,
+            lineStyle:{ color, width:2 }, symbol:'none',
+            areaStyle:{ color, opacity:0.2 }
+          }]
+        });
+        window.addEventListener('resize', () => chart.resize());
+      }
+      initSpark('spark1',[59,60,61,62,63,64,65], colors[0]);
+      initSpark('spark2',[0.2,0.15,0.18,0.1,0.22,0.12,0.2], colors[1]);
+      initSpark('spark3',[55,57,56,58,60,62,61], colors[2]);
+      initSpark('spark4',[24,25,26,25,24,23,22], colors[3]);
+
+      // KPI 更新
+      let prev = 59.8, curr = 60.0;
+      function updateKPI() {
+        const diff = (curr - prev).toFixed(2);
+        document.getElementById('totalArea').innerText = curr.toFixed(2);
+        document.getElementById('deltaArea').innerText = (diff>=0?'+':'')+diff;
+        prev = curr; curr += (Math.random()*0.1 - 0.05);
+        const hum = 50 + Math.random()*20;
+        const tmp = 15 + Math.random()*10;
+        document.getElementById('liveHumidity').innerText = hum.toFixed(1);
+        document.getElementById('liveTemp').innerText = tmp.toFixed(1);
+      }
+      updateKPI();
+      setInterval(updateKPI, 5000);
+
+      // 面积趋势折线图：1980 年至 2025 年动态循环
+      const areaChart = echarts.init(document.getElementById('areaChart'));
+      const START_YEAR = 1980, MAX_YEAR = 2025;
+      let years = Array.from({length: new Date().getFullYear() - START_YEAR + 1},
+        (_,i)=>String(START_YEAR+i));
+      let values = years.map(()=>+(Math.random()*5 + 20).toFixed(1));
+
+      areaChart.setOption({
+        color: [colors[0]],
+        tooltip: { trigger:'axis' },
+        xAxis: { type:'category', data: years },
+        yAxis: { type:'value' },
+        series: [{ type:'line', data: values, smooth:true, lineStyle:{ width:3 } }]
+      });
+
+      setInterval(()=>{
+        let next = +years[years.length-1] + 1;
+        if(next > MAX_YEAR) {
+          years = [String(START_YEAR)];
+          values = [values[0]];
+        } else {
+          years.push(String(next));
+          values.push(+(values[values.length-1] + (Math.random()*2 - 1)).toFixed(1));
+        }
+        areaChart.setOption({
+          xAxis:{ data: years },
+          series:[{ data: values }]
+        });
+      }, 2000);
+
+      window.addEventListener('resize', ()=>areaChart.resize());
+
+      // 物种数量柱状图
+      const barChart = echarts.init(document.querySelector('#barChart .chart'));
+      barChart.setOption({
+        color:[colors[1]],
+        tooltip:{ trigger:'axis' },
+        xAxis:{ type:'category', data:['红树','鱼类','鸟类','底栖'] },
+        yAxis:{ type:'value' },
+        series:[{ type:'bar', data:[23,58,42,35], barWidth:'60%', label:{ show:true, position:'top' }}]
+      });
+      window.addEventListener('resize', ()=>barChart.resize());
+
+      // 区域占比饼图
+      const pieChart = echarts.init(document.querySelector('#pieChart .chart'));
+      pieChart.setOption({
+        color: colors,
+        tooltip:{ trigger:'item' },
+        series:[{
+          type:'pie', radius:'60%',
+          data:[
+            {value:57.2,name:'湛江市'},{value:7.0,name:'茂名市'},
+            {value:8.5,name:'阳江市'},{value:7.9,name:'江门市'},
+            {value:4.4,name:'珠海市'},{value:3.4,name:'惠州市'},
+            {value:2.6,name:'深圳市'},{value:3.5,name:'广州市'},
+            {value:1.3,name:'汕头市'},{value:2.1,name:'汕尾市'},
+            {value:2.2,name:'其他地区'}
+          ],
+          label:{ formatter:'{b} {d}%'}
+        }]
+      });
+      window.addEventListener('resize', ()=>pieChart.resize());
+
+      // 保护等级雷达图
+      const radarChart = echarts.init(document.querySelector('#radarChart .chart'));
+      radarChart.setOption({
+        color:[colors[2]],
+        tooltip:{},
+        radar:{ indicator:[
+          {name:'国家级',max:100},{name:'省级',max:100},
+          {name:'市级',max:100},{name:'科研',max:100},{name:'生态',max:100}
+        ]},
+        series:[{ type:'radar', data:[{ value:[85,70,60,80,95] }], areaStyle:{ opacity:0.2 } }]
+      });
+      window.addEventListener('resize', ()=>radarChart.resize());
+
+      // 修复点散点图
+      const scatterChart = echarts.init(document.querySelector('#scatterChart .chart'));
+      scatterChart.setOption({
+        tooltip:{ trigger:'item' },
+        xAxis:{ type:'value', name:'经度' },
+        yAxis:{ type:'value', name:'纬度' },
+        series:[{
+          type:'scatter',
+          data:[[110.4,21.2],[110.9,21.7],[111.97,21.85],[113.3,23.1]],
+          symbolSize:12, itemStyle:{ color: colors[3] }
+        }]
+      });
+      window.addEventListener('resize', ()=>scatterChart.resize());
+
+      // 地图
+      fetch('https://geo.datav.aliyun.com/areas_v3/bound/440000_full.json')
+        .then(res=>res.json()).then(geo=>{
+          echarts.registerMap('GD', geo);
+          const mapChart = echarts.init(document.getElementById('map'));
+          mapChart.setOption({
+            visualMap:{
+              type:'piecewise',
+              pieces:[
+                {min:7000,color:colors[0]},{min:1000,max:7000,color:colors[1]},
+                {min:500,max:1000,color:colors[2]},{min:100,max:500,color:colors[3]},
+                {max:100,color:colors[4]}
+              ],
+              orient:'vertical',left:'80%',top:'20%'
+            },
+            tooltip:{ trigger:'item', formatter:'{b}<br/>面积：{c} 公顷' },
+            series:[{
+              type:'map', map:'GD', roam:true,
+              label:{ show:true },
+              itemStyle:{ areaColor:'#e9f5e9', borderColor:'#93c9d8' },
+              emphasis:{ label:{ color:'#fff' }, itemStyle:{ areaColor:'#2d6a4f' } },
+              data:[
+                {name:'湛江市',value:6521.85},{name:'茂名市',value:792.51},
+                {name:'阳江市',value:969.29},{name:'江门市',value:898.9},
+                {name:'珠海市',value:500},{name:'惠州市',value:388.22},
+                {name:'深圳市',value:296},{name:'广州市',value:403.9},
+                {name:'汕头市',value:144},{name:'汕尾市',value:240},
+                {name:'其他地区',value:245.33}
+              ]
+            }]
+          });
+          window.addEventListener('resize', ()=>mapChart.resize());
+        });
+    });
+  </script>
+</body>
+</html>

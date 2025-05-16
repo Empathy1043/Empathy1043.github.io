@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>红树林保护</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .accordion-collapse {
+      transition: height 0.35s ease !important;
+    }
+    .accordion-button:not(.collapsed) {
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+      background-color: #f8f9fa;
+    }
+    .accordion-button::after {
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+<!-- Our projects-->
+<section class="section bg-light py-6">
+  <div class="container">
+    
+    <!-- 主标题区 -->
+    <div class="row g-5 align-items-center mb-7">
+      <div class="col-lg-5">
+        <p class="text-uppercase text-muted mb-3">关于红树林</p>
+        <h1 class="display-5 text-primary mb-4">海岸线上的生命奇迹</h1>
+        <div class="lead text-muted line-height-lg">
+          <p>在潮起潮落的海陆交界处，有一片神秘而坚韧的生态系统——红树林。它们时而浸没于咸涩的海水中，时而裸露在烈日下，却以独特的生存智慧守护着海岸线，滋养着万千生灵。</p>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <img src="images/011.jpg" alt="红树林航拍全景" class="img-fluid rounded-3 shadow" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 核心内容模块 -->
+    <!-- 修复后的核心内容模块 -->
+<div class="row g-5 mb-7">
+<div class="col-md-6">
+<div class="card h-100 border-0 bg-white shadow-sm p-4">
+<img src="images/005.jpg" alt="红树林根系结构" class="card-img-top rounded-2 mb-4">
+<div class="card-body p-0">
+  <h3 class="h3 mb-3">并非红色的森林</h3>
+  <p class="text-secondary">尽管名字中有"红"，红树林的枝叶并非红色。其名源于树干中富含的"单宁酸"——这种物质遇氧氧化后呈红褐色，古人用其染布时发现了这一特性，故称"红树"。全球约有80余种红树植物，从东南亚的广袤林带到中国东南沿海的带状分布，它们用发达的气生根、胎生繁殖等绝技，在盐渍化土壤中开辟出生机盎然的绿色疆域。</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card h-100 border-0 bg-white shadow-sm p-4">
+<img src="images/013.jpg" alt="红树林生态" class="card-img-top rounded-2 mb-4">
+<div class="card-body p-0">
+  <h3 class="h3 mb-3">海岸生态卫士</h3>
+  <div class="accordion" id="ecoAccordion">
+    <!-- 第一项 -->
+    <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button 
+          class="accordion-button collapsed" 
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#waveBreaker"
+          aria-expanded="false"
+          aria-controls="waveBreaker">
+          天然防波堤
+        </button>
+      </h3>
+      <div 
+        id="waveBreaker" 
+        class="accordion-collapse collapse"
+        data-bs-parent="#ecoAccordion">
+        <div class="accordion-body">
+          红树林的立体根系网络可削减70-90%的波浪能量...
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二项 -->
+    <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button 
+          class="accordion-button collapsed" 
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#carbonSink"
+          aria-expanded="false"
+          aria-controls="carbonSink">
+          蓝色碳汇冠军
+        </button>
+      </h3>
+      <div 
+        id="carbonSink" 
+        class="accordion-collapse collapse"
+        data-bs-parent="#ecoAccordion">
+        <div class="accordion-body">
+          单位面积红树林的固碳能力是热带雨林的5-10倍...
+        </div>
+      </div>
+    </div>
+
+    <!-- 第三项 -->
+    <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button 
+          class="accordion-button collapsed" 
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#biodiversity"
+          aria-expanded="false"
+          aria-controls="biodiversity">
+          生物多样性方舟
+        </button>
+      </h3>
+      <div 
+        id="biodiversity" 
+        class="accordion-collapse collapse"
+        data-bs-parent="#ecoAccordion">
+        <div class="accordion-body">
+          弹涂鱼用胸鳍"行走"，招潮蟹挥动不对称的螯足...
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- 结束card-body -->
+</div> <!-- 结束card -->
+</div> <!-- 结束col-md-6 -->
+</div> <!-- 结束row -->
+
+    <!-- 数据警示模块 -->
+    <div class="row mb-7">
+      <div class="col-lg-10 mx-auto">
+        <div class="bg-primary text-white rounded-3 p-5 shadow">
+          <h3 class="h2 mb-4">危机中的生命防线</h3>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <p class="mb-0">过去40年，全球35%的红树林因围垦养殖、城市扩张而消失，消失速度是森林的3-5倍。中国虽通过生态修复使红树林面积逆势增长（2022年达2.92万公顷），但碎片化、外来物种入侵等问题依然严峻。</p>
+            </div>
+            <div class="col-md-6">
+              <div class="border-start border-3 ps-4">
+                <p class="mb-0">若全球变暖导致海平面上升速度超过红树林自然淤高速度，这片生命防线或将"溺水而亡"。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 宣言式结语 -->
+    <div class="row mb-7">
+      <div class="col-lg-8 mx-auto text-center">
+        <blockquote class="blockquote fs-5 text-muted px-lg-5">
+          <p class="mb-4">红树林的存续，关乎沿海2亿居民的安全，更关乎地球生态系统的健康。当我们凝视那些倔强立于潮水中的红树时，看到的不仅是自然的奇迹，更是生命的启示</p>
+          <footer class="blockquote-footer mt-3">—— 唯有理解这份超越人类尺度的生态智慧，方能在与海洋的共生中，找到永恒的答案</footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- CTA按钮 -->
+    <div class="text-center">
+      <a href="portfolio.html" class="btn btn-primary btn-lg px-5 rounded-pill shadow">
+        立即参与保护行动
+        <i class="bi bi-arrow-right ms-2"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

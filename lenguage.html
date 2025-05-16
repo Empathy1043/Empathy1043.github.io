@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红树林生态系统知识库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <link rel="stylesheet" href="css/lenguage.css">
+</head>
+
+<body>
+    <div id="logo">
+        <img src="images/logo.webp" alt="logo">
+    </div>
+    <div class="py-12 bg-gradient-to-b from-[#365f4e] to-[#3d5047] text-white">
+        <div id="nav" class="section flex justify-center space-x-8 mb-8">
+            <a href="index.html" class="text-white hover:text-[#b8e0d2] transition-colors">首页</a>
+            <a href="science.html" class="text-white hover:text-[#b8e0d2] transition-colors">生态科普</a>
+            <a href="protection.html" class="text-white hover:text-[#b8e0d2] transition-colors">保护行动</a>
+            <a href="news.html" class="text-white hover:text-[#b8e0d2] transition-colors">新闻资讯</a>
+            <a href="about.html" class="text-white hover:text-[#b8e0d2] transition-colors">关于我们</a>
+        </div>
+        <div class="section text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">红树林生态系统知识库</h1>
+            <p>红林守望团队</p>
+            <p class="text-xl md:text-2xl opacity-90">探索海岸线上的绿色长城</p>
+        </div>
+    </div>
+
+    <!-- 知识概括板块 -->
+    <div class="section">
+        <h2 class="text-3xl font-bold section-title">全球红树林概况</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="card">
+                <div class="map-container p-4">
+                    <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">全球红树林分布</h3>
+                    <div id="worldMap" style="width: 100%; height: 300px;"></div>
+                    <p class="mt-4 text-gray-600">主要分布在25°N至25°S的热带海岸，中国分布最北至浙江乐清（28°N）</p>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">生态价值数据</h3>
+                <div id="carbonChart" style="width: 100%; height: 300px;"></div>
+                <p class="mt-4 text-gray-600">红树林固碳能力是热带雨林的3-4倍，是地球上最富生产力的生态系统之一</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-water text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">海岸保护</h4>
+                </div>
+                <p class="text-gray-600">红树林能减少75%的海浪冲击力，有效防止海岸侵蚀，保护沿海居民安全</p>
+            </div>
+
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-fish text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">生物多样性</h4>
+                </div>
+                <p class="text-gray-600">为2000多种海洋生物提供栖息地，包括濒危物种如中华白海豚和玳瑁</p>
+            </div>
+
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-leaf text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">碳汇功能</h4>
+                </div>
+                <p class="text-gray-600">单位面积碳储量是热带雨林的4-5倍，在全球碳循环中扮演关键角色</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 红树林品种板块 -->
+    <div class="section bg-[#f8faf9]">
+        <h2 class="text-3xl font-bold section-title">红树林物种图鉴</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="species-card">
+                <div class="species-card-inner">
+                    <div class="species-card-front card">
+                        <img src="images/红树.webp" alt="红树" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold mb-2">红树（红树科）</h3>
+                            <p class="text-gray-600">典型真红树植物，具有发达的支柱根和胎生繁殖特性...</p>
+                            <div class="science-tag">科研价值：根系固碳效率高</div>
+                        </div>
+                    </div>
+                    <div class="species-card-back">
+                        <h3 class="text-xl font-bold mb-2">科研数据</h3>
+                        <ul class="text-sm">
+                            <li class="mb-1">• 单宁含量：22-28%</li>
+                            <li class="mb-1">• 年固碳量：12.55 t/ha</li>
+                            <li class="mb-1">• 耐盐范围：0-35‰</li>
+                            <li class="mb-1">• 生长温度：20-30℃</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="species-card-inner">
+                    <div class="species-card-front card">
+                        <img src="images/白骨壤1.webp" alt="白骨壤" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold mb-2">白骨壤（马鞭草科）</h3>
+                            <p class="text-gray-600">具有特殊的呼吸根（指状呼吸根），能在缺氧的淤泥中生长...</p>
+                            <div class="science-tag">科研价值：重金属吸附</div>
+                        </div>
+                    </div>
+                    <div class="species-card-back">
+                        <h3 class="text-xl font-bold mb-2">科研数据</h3>
+                        <ul class="text-sm">
+                            <li class="mb-1">• 铅吸附率：85-92%</li>
+                            <li class="mb-1">• 年固碳量：10.8 t/ha</li>
+                            <li class="mb-1">• 耐盐范围：5-45‰</li>
+                            <li class="mb-1">• 生长温度：15-35℃</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="species-card-inner">
+                    <div class="species-card-front card">
+                        <img src="images/尾头凤尾蕨.webp" alt="卤蕨" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold mb-2">卤蕨（凤尾蕨科）</h3>
+                            <p class="text-gray-600">唯一蕨类真红树植物，耐盐性极强，叶片可分泌盐结晶...</p>
+                            <div class="science-tag">科研价值：重金属吸附</div>
+                        </div>
+                    </div>
+                    <div class="species-card-back">
+                        <h3 class="text-xl font-bold mb-2">科研数据</h3>
+                        <ul class="text-sm">
+                            <li class="mb-1">• 镉吸附率：78-85%</li>
+                            <li class="mb-1">• 年固碳量：8.6 t/ha</li>
+                            <li class="mb-1">• 耐盐范围：0-40‰</li>
+                            <li class="mb-1">• 生长温度：18-32℃</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 生态系统板块 -->
+    <div class="section">
+        <h2 class="text-3xl font-bold section-title">生态系统动态</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="card p-6">
+                <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">潮间带生态模拟</h3>
+                <div class="tide-simulation">
+                    <div class="water-level" data-tide="high">
+                        <i class="fas fa-fish mr-2"></i>高潮期：鱼类觅食活跃
+                    </div>
+                    <div class="water-level" data-tide="low">
+                        <i class="fas fa-crab mr-2"></i>低潮期：蟹类活动频繁
+                    </div>
+                </div>
+                <p class="mt-4 text-gray-600">红树林生态系统随潮汐变化呈现周期性特征，形成独特的生物节律</p>
+            </div>
+
+            <div class="card p-6">
+                <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">食物链关系</h3>
+                <div id="foodChain" style="width: 100%; height: 250px;"></div>
+                <p class="mt-4 text-gray-600">从凋落物分解者到顶级捕食者，形成复杂的营养级联关系</p>
+            </div>
+        </div>
+
+        <div class="card p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">生态服务价值</h3>
+            <div id="ecosystemValue" style="width: 100%; height: 300px;"></div>
+        </div>
+
+        <div class="calculator card p-6">
+            <h3 class="text-xl font-bold mb-4 text-[#4a8f6d]">生态价值计算器</h3>
+            <p class="mb-4 text-gray-600">计算红树林保护区的年固碳量（基于海莲林固碳系数12.55 t/ha）</p>
+            <input type="number" id="area-input" placeholder="输入保护区面积（公顷）">
+            <button onclick="calculateCarbon()">计算固碳量</button>
+            <div class="mt-4">
+                <p class="font-bold">年固碳量：<span id="result" class="text-[#4a8f6d]">0</span> 吨/年</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 保护措施板块 -->
+    <div class="section bg-[#f8faf9]">
+        <h2 class="text-3xl font-bold section-title">保护与修复</h2>
+
+        <div class="mb-12">
+            <h3 class="text-xl font-bold mb-6 text-[#4a8f6d] text-center">红树林保护历程</h3>
+            <div class="timeline">
+                <div class="timeline-event left">
+                    <div class="card p-4">
+                        <h4 class="font-bold mb-2">1992年</h4>
+                        <p>中国加入《湿地公约》，开始系统保护红树林</p>
+                    </div>
+                </div>
+                <div class="timeline-event right">
+                    <div class="card p-4">
+                        <h4 class="font-bold mb-2">2001年</h4>
+                        <p>建立首个国家级红树林自然保护区（广东湛江）</p>
+                    </div>
+                </div>
+                <div class="timeline-event left">
+                    <div class="card p-4">
+                        <h4 class="font-bold mb-2">2017年</h4>
+                        <p>实施《红树林生态修复技术规程》国家标准</p>
+                    </div>
+                </div>
+                <div class="timeline-event right">
+                    <div class="card p-4">
+                        <h4 class="font-bold mb-2">2023年</h4>
+                        <p>《红树林修复最佳实践指南》发布，联合50+科研机构</p>
+                    </div>
+                </div>
+                <div class="timeline-event left">
+                    <div class="card p-4">
+                        <h4 class="font-bold mb-2">2024年</h4>
+                        <p>湛江红树林之城建设，发展社区共管机制</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h3 class="text-xl font-bold mb-6 text-[#4a8f6d] text-center">湛江案例</h3>
+            <div class="case-carousel">
+                <div class="case-item" style="background-image: url(images/金牛岛.webp)">
+                    <h4 class="text-2xl font-bold mb-2">湛江金牛岛修复工程</h4>
+                    <p>累计种植红树苗20万株，白鹭回归率提升300%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-tree text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">生态修复</h4>
+                </div>
+                <p class="text-gray-600">采用"适地适树"原则，选择本地优势种进行植被恢复</p>
+            </div>
+
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">社区参与</h4>
+                </div>
+                <p class="text-gray-600">建立社区共管机制，发展可持续生态旅游和养殖</p>
+            </div>
+
+            <div class="card p-6 hover:bg-[#f0f7f4]">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-[#4a8f6d] text-white flex items-center justify-center mr-4">
+                        <i class="fas fa-globe-asia text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold">国际合作</h4>
+                </div>
+                <p class="text-gray-600">参与全球红树林联盟，共享保护技术与经验</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-8 bg-[#4a8f6d] text-white text-center">
+        <div class="section">
+            <h2 class="text-2xl font-bold mb-4">保护红树林，守护蓝色星球</h2>
+            <p class="mb-6 max-w-2xl mx-auto">红树林是海岸生态系统的关键组成部分，需要我们共同保护</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" onclick="alert('欢迎了解更多红树林保护知识！请联系电话17876759201')" class="px-6 py-2 bg-white text-[#4a8f6d] rounded-full font-bold">了解更多</a>
+                <a href="#" onclick="alert('感谢您愿意参与红树林保护行动！请联系电话17876759201')" class="px-6 py-2 border border-white rounded-full font-bold">参与保护</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-6 bg-gray-100 text-center text-gray-500 text-sm">
+
+        <h2>根扎潮汐间，绿荫护人间</h2>
+        <h4 class="fw-normal">关注我们，与红树林共绘生命的蔚蓝诗篇</h4>
+        <h4 class="fw-normal">联系我们：&nbsp;&nbsp;<a class="fw-bold"
+                href="tel:#">+178&nbsp;-&nbsp;7675&nbsp;-&nbsp;9201</a></h4>
+
+    </div>
+
+    <!-- 在body结束标签前加载JS -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <script src="js/lenguage.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    scroll-behavior: smooth;
+    background: linear-gradient(200deg, white, rgb(160, 195, 160));
+    color: #333;
+}
+
+.section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(74, 143, 109, 0.15);
+}
+
+.species-card {
+    perspective: 1000px;
+    height: 320px;
+}
+
+.species-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.species-card:hover .species-card-inner {
+    transform: rotateY(180deg);
+}
+
+.species-card-front,
+.species-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.species-card-back {
+    background-color: #4a8f6d;
+    color: white;
+    transform: rotateY(180deg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #b8e0d2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+}
+
+.timeline-event {
+    padding: 10px 30px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.timeline-event::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #4a8f6d;
+    border-radius: 50%;
+    top: 20px;
+    z-index: 1;
+}
+
+.left {
+    left: 0;
+    text-align: right;
+}
+
+.right {
+    left: 50%;
+    text-align: left;
+}
+
+.left::after {
+    right: -10px;
+}
+
+.right::after {
+    left: -10px;
+}
+
+.case-carousel {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.case-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-blend-mode: multiply;
+}
+
+.tide-simulation {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(to bottom, #4a8f6d, #b8e0d2);
+}
+
+.water-level {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    transition: all 2s ease-in-out;
+}
+
+.water-level[data-tide="high"] {
+    background-color: rgba(0, 119, 182, 0.7);
+    height: 70%;
+    bottom: 0;
+}
+
+.water-level[data-tide="low"] {
+    background-color: rgba(74, 143, 109, 0.7);
+    height: 30%;
+    bottom: 0;
+}
+
+.map-container {
+    position: relative;
+    height: 400px;
+    background-color: #e8f5e9;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.science-tag {
+    display: inline-block;
+    background-color: #ffd700;
+    color: #333;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.calculator {
+    background-color: #f0f7f4;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.calculator input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #b8e0d2;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.calculator button {
+    background-color: #4a8f6d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calculator button:hover {
+    background-color: #3a7a5d;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    color: black;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #4a8f6d, #b8e0d2);
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-event {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-event::after {
+        left: 21px;
+    }
+
+    .left,
+    .right {
+        left: 0;
+        text-align: left;
+    }
+}
+
+
+.py-6,
+.py-8 {
+    position: relative;
+    /* 创建定位上下文 */
+    z-index: 1;
+    /* 确保内容在伪元素上方 */
+}
+
+.py-6::before,
+.py-8::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../img/footer.webp) center/cover;
+    opacity: 0.9;
+    /* 透明度值（0-1）*/
+    z-index: -1;
+    /* 背景置于内容下方 */
+}
+
+/* 导航栏样式 */
+#nav {
+    background: rgba(54, 95, 78, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#nav a {
+    position: relative;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: larger;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+#nav a:hover {
+    background: rgba(184, 224, 210, 0.2);
+    transform: translateY(-2px);
+}
+
+#nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #b8e0d2;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+#nav a:hover::after {
+    width: 70%;
+}
+
+#nav a.active {
+    background: rgba(184, 224, 210, 0.3);
+    color: #b8e0d2;
+}
+
+#logo {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+}
+#logo img {
+    width: 80px;
+    height: 80px;
+}
+
+@media (max-width: 768px) {
+    #nav {
+        border-radius: 25px;
+        padding: 0.8rem;
+    }
+
+    #nav a {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+}

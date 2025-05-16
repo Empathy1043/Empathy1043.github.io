@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红树奇趣园</title>
+    <link rel="stylesheet" href="css/game.css"/>
+    <style>
+        /* nav.css */
+        /* 导入字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        /* Logo样式 */
+        #logo {
+            position: fixed;
+            left: 20px;
+            top: 10px;
+            z-index: 1;
+        }
+
+        #logo img {
+            width: 80px;
+            height: 80px;
+        }
+
+        /* 导航栏主体样式 */
+        #nav {
+            background: rgba(54, 95, 78, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            space-x: 8;
+            margin-bottom: 2rem;
+            z-index: -1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 32px;
+        }
+
+        /* 导航链接样式 */
+        #nav a {
+            position: relative;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: larger;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+        #nav a:hover {
+            background: rgba(184, 224, 210, 0.2);
+            transform: translateY(-2px);
+            color: #b8e0d2;
+        }
+
+        /* 导航链接下划线动画效果 */
+        #nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #b8e0d2;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        #nav a:hover::after {
+            width: 70%;
+        }
+
+        #nav a.active {
+            background: rgba(184, 224, 210, 0.3);
+            color: #b8e0d2;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            #nav {
+                border-radius: 25px;
+                padding: 0.8rem;
+            }
+
+            #nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="logo">
+        <img src="images/logo.webp" alt="logo">
+    </div>
+    <div id="footer-links">
+        <div id="nav">
+            <a href="index.html" class="text-white hover:text-[#b8e0d2] transition-colors">首页</a>
+            <a href="science.html" class="text-white hover:text-[#b8e0d2] transition-colors">生态科普</a>
+            <a href="protection.html" class="text-white hover:text-[#b8e0d2] transition-colors">保护行动</a>
+            <a href="news.html" class="text-white hover:text-[#b8e0d2] transition-colors">新闻资讯</a>
+            <a href="about.html" class="text-white hover:text-[#b8e0d2] transition-colors">关于我们</a>
+        </div>
+        <div >
+            <h1 id="gametitle">红树奇趣园</h1>
+            <p id="p1" style="font-size: 16px;">红林守望团队</p>
+            <p id="p1" class="text-xl md:text-2xl opacity-90" style="font-size: 24px;">红树林小探险家营地</p>
+        </div>
+    </div>
+    <!-- —— 生态小游戏 —— -->
+  <section class="game-container">
+    <aside class="info-panel">
+      <h2 class="panel-title">红树林小课堂</h2>
+      <div class="panel-content">
+        <div class="info-section">
+          <h3>🎮 玩法说明</h3>
+          <p>
+            1. 将下方生物拖到对应高度区间<br/>
+            2. 放置成功可获得星星并查看科普贴士<br/>
+            3. 收集星星解锁隐藏探险关卡<br/>
+            4. 隐藏关卡中有红树林小问答，答对加星
+          </p>
+        </div>
+        <button class="reset-btn" onclick="MangroveGame.reset()">重新开始</button>
+      </div>
+    </aside>
+    <main class="game-main">
+      <section class="habitat-zone" id="main-area">
+        <div class="zone-overlay">
+          <div class="zone-line" style="top:0%"><span>上层（白鹭）</span></div>
+          <div class="zone-line" style="top:30%"><span>中层（红树苗）</span></div>
+          <div class="zone-line" style="top:60%"><span>底层（底栖生物）</span></div>
+        </div>
+      </section>
+      <section class="animal-pool" id="animal-pool"></section>
+    </main>
+    <aside class="reward-board">
+      <h3 class="reward-title">我的收集箱 ★<span id="starCount">0</span></h3>
+      <button class="hint-btn" onclick="giveHint()">🤔 需要帮助</button>
+    </aside>
+  </section>
+
+  <!-- —— 4×4 植物拼图 —— -->
+  <section class="mangrove-puzzle">
+    <aside class="sidebar">
+      <h3>原图</h3>
+      <img id="source-img"
+           src="https://liujinxiu-java1.oss-cn-beijing.aliyuncs.com/2025/05/119fff5d-d241-4a81-aab1-ee77d7c901c8.jpg"
+           alt="红树植物原图">
+      <h3>科普小知识</h3>
+      <div id="info-content">拖动下面碎片到目标区域，完成后显示对应小知识。</div>
+    </aside>
+    <div class="puzzle-area">
+      <div class="puzzle-grid" id="grid"></div>
+      <div class="piece-pool" id="pool"></div>
+    </div>
+  </section>
+
+  <!-- 问答弹窗（生态隐藏关卡） -->
+  <div id="quiz-modal" class="quiz-modal hidden">
+    <div class="quiz-content">
+      <h3 id="quiz-question">问题文本</h3>
+      <div id="quiz-options" class="quiz-options"></div>
+      <button id="quiz-close" class="quiz-close">退出问答</button>
+    </div>
+  </div>
+  <section class="eco-journal">
+  <header>
+    <h2>红树林生态手账</h2>
+    <p>翻手手账，了解红树林里奇妙的生物与植物——让小朋友在互动中学习、探索。</p>
+  </header>
+
+  <div class="eco-content">
+    <!-- 原始书本结构 -->
+    <div class="storybook">
+      <div class="book">
+        <div class="gap"></div>
+        <div class="pages">
+          <div class="page"></div>
+          <div class="page"></div>
+          <div class="page"></div>
+          <div class="page"></div>
+          <div class="page"></div>
+          <div class="page"></div>
+        </div>
+        <div class="flips">
+          <div class="flip flip1">
+            <div class="flip flip2">
+              <div class="flip flip3">
+                <div class="flip flip4">
+                  <div class="flip flip5">
+                    <div class="flip flip6">
+                      <div class="flip flip7"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧内容 -->
+    <aside>
+      <h3>常见红树林植物</h3>
+      <ul>
+        <li>红树苗：固定泥沙，防止海岸侵蚀</li>
+        <li>支柱根：帮助呼吸，支撑高大树体</li>
+        <li>气根：伸出泥面，吸收空气中的氧气</li>
+        <li>叶背盐晶：排出多余盐分，适应海水环境</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+  <script src="js/game.js"></script>
+</body>
+
+</html>

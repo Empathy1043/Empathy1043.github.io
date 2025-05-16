@@ -1,0 +1,34 @@
+<div id="map"></div>
+<section class="mangrove-book">
+        <div class="imgLoader"></div>
+        <div class="book-container">
+            <div class="book">
+                <div class="gap"></div>
+                <!-- 底图 -->
+                <div class="pages">
+                    <div class="book-page"></div>
+                    <div class="book-page"></div>
+                    <div class="book-page"></div>
+                    <div class="book-page"></div>
+                    <div class="book-page"></div>
+                    <div class="book-page"></div>
+                </div>
+                <!-- 切片 -->
+                <div class="flips">
+                    <div class="flip flip1">
+                        <div class="flip flip2">
+                            <div class="flip flip3">
+                                <div class="flip flip4">
+                                    <div class="flip flip5">
+                                        <div class="flip flip6">
+                                            <div class="flip flip7"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

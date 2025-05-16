@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>红树林生态价值可视化报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <style>
+        /* 保持原有样式，新增对比图标样式 */
+        .comparison-icon {
+            width: 40px;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        .life-example {
+            background: #e3f2fd;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 固碳能力生活化对比 -->
+<div class="chart-container">
+    <div id="carbonLifeChart" style="height:500px;"></div>
+    <div class="quote">
+        "每公顷红树林年固碳25吨，相当于中和53辆小汽车的年排放量"
+        <div class="source">计算标准：家用车年均碳排放4.6吨（国际能源署2022数据）</div>
+    </div>
+</div>
+
+<!-- 生态价值对比 -->
+<div class="chart-container">
+    <div id="valueChart" style="height:500px;"></div>
+    <div class="quote">
+        "红树林的生态价值是其木材价值的3-5倍，1公里成熟红树林可节省年护岸费用380万元"
+        <div class="source">《中国红树林保护修复行动计划》</div>
+    </div>
+</div>
+
+<!-- 城市面积对比 -->
+<div class="chart-container">
+    <div id="cityChart" style="height:500px;"></div>
+    <div class="quote">
+        "全球现存红树林仅相当于0.7个北京市面积，却庇护着75%的热带海岸鱼类"
+    </div>
+</div>
+
+<script>
+    // 固碳生活化对比（汽车图标柱状图）
+    let carbonLifeChart = echarts.init(document.getElementById('carbonLifeChart'));
+    carbonLifeChart.setOption({
+        title: { text: '固碳量生活化对比' },
+        xAxis: {
+            data: ['红树林(1公顷)', '小汽车年排放'],
+            axisLabel: {
+                formatter: (value) => {
+                    return value.indexOf('汽车') > -1 
+                        ? '{a|}' + value 
+                        : value;
+                },
+                rich: {
+                    a: {
+                        height: 30,
+                        align: 'center',
+                        backgroundColor: {
+                            image: 'https://img.icons8.com/ios-filled/50/000000/car.png'
+                        }
+                    }
+                }
+            }
+        },
+        yAxis: { name: '吨/年' },
+        series: [{
+            type: 'bar',
+            data: [25, 4.6],
+            itemStyle: { 
+                color: (params) => params.dataIndex === 0 ? '#4CAF50' : '#607D8B'
+            }
+        }]
+    });
+
+    // 经济价值对比（堆叠柱状图）
+    let valueChart = echarts.init(document.getElementById('valueChart'));
+    valueChart.setOption({
+        title: { text: '年经济价值对比（万元/公里）' },
+        xAxis: { data: ['红树林生态系统', '人工护岸工程'] },
+        yAxis: {},
+        series: [{
+            type: 'bar',
+            stack: '总量',
+            data: [380, 120],
+            itemStyle: { color: '#4CAF50' }
+        },{
+            type: 'bar',
+            stack: '总量',
+            data: [0, 260],
+            itemStyle: { color: '#607D8B' }
+        }]
+    });
+
+    // 城市面积对比（象形图）
+    let cityChart = echarts.init(document.getElementById('cityChart'));
+    cityChart.setOption({
+        title: { text: '面积对比（平方公里）' },
+        series: [{
+            type: 'pictorialBar',
+            symbol: 'rect',
+            symbolSize: [30, 10],
+            data: [{
+                value: 14800,
+                symbol: 'image://https://img.icons8.com/color/48/city.png'
+            },{
+                value: 21000,
+                symbol: 'image://https://img.icons8.com/dusk/48/mangrove.png'
+            }],
+            label: {
+                show: true,
+                formatter: (params) => params.value === 14800 
+                    ? '北京市面积\n21,000km²' 
+                    : '全球红树林\n14,800km²'
+            }
+        }]
+    });
+</script>
+
+</body>
+</html>
