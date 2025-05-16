@@ -251,7 +251,7 @@
       window.addEventListener('resize', ()=>scatterChart.resize());
 
       // 地图
-      fetch('https://geo.datav.aliyun.com/areas_v3/bound/440000_full.json')
+      fetch('./map.json')
         .then(res=>res.json()).then(geo=>{
           echarts.registerMap('GD', geo);
           const mapChart = echarts.init(document.getElementById('map'));
