@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化所有图表
     initCharts();
+    initCarousel();
 });
 
 function initCharts() {
@@ -258,4 +259,136 @@ function calculateCarbon() {
     const area = document.getElementById('area-input').value;
     const result = area * 12.55; // 海莲林固碳系数
     document.getElementById('result').innerText = result.toFixed(2);
+}
+
+// 在文件末尾添加轮播图功能
+function initCarousel() {
+    const carousel = document.querySelector('.case-carousel');
+    if (!carousel) return;
+
+    const items = carousel.querySelectorAll('.case-item');
+    let currentIndex = 0;
+    let isAnimating = false;
+    let autoplayInterval;
+
+    // 创建轮播控制点
+    const controls = document.createElement('div');
+    controls.className = 'carousel-controls';
+    items.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+        dot.addEventListener('click', () => {
+            if (!isAnimating) {
+                clearInterval(autoplayInterval);
+                goToSlide(index);
+                startAutoplay();
+            }
+        });
+        controls.appendChild(dot);
+    });
+    carousel.appendChild(controls);
+
+    // 创建箭头控制
+    const prevArrow = document.createElement('button');
+    prevArrow.className = 'carousel-arrow carousel-prev';
+    prevArrow.innerHTML = '❮';
+    prevArrow.addEventListener('click', () => {
+        if (!isAnimating) {
+            clearInterval(autoplayInterval);
+            goToSlide(currentIndex - 1);
+            startAutoplay();
+        }
+    });
+
+    const nextArrow = document.createElement('button');
+    nextArrow.className = 'carousel-arrow carousel-next';
+    nextArrow.innerHTML = '❯';
+    nextArrow.addEventListener('click', () => {
+        if (!isAnimating) {
+            clearInterval(autoplayInterval);
+            goToSlide(currentIndex + 1);
+            startAutoplay();
+        }
+    });
+
+    carousel.appendChild(prevArrow);
+    carousel.appendChild(nextArrow);
+
+    // 显示第一张幻灯片
+    items[0].classList.add('active');
+
+    function goToSlide(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // 移除当前活动状态
+        items[currentIndex].classList.remove('active');
+        controls.children[currentIndex].classList.remove('active');
+
+        // 更新索引
+        currentIndex = (index + items.length) % items.length;
+
+        // 添加新的活动状态
+        items[currentIndex].classList.add('active');
+        controls.children[currentIndex].classList.add('active');
+
+        // 动画结束后重置状态
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+    }
+
+    // 自动轮播函数
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            if (!isAnimating) {
+                goToSlide(currentIndex + 1);
+            }
+        }, 1500); // 每3秒切换一次
+    }
+
+    // 启动自动轮播
+    startAutoplay();
+
+    // 鼠标悬停时暂停自动轮播
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoplayInterval);
+    });
+
+    // 鼠标离开时恢复自动轮播
+    carousel.addEventListener('mouseleave', () => {
+        startAutoplay();
+    });
+
+    // 添加触摸滑动支持
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // 向左滑动，显示下一张
+            if (!isAnimating) {
+                clearInterval(autoplayInterval);
+                goToSlide(currentIndex + 1);
+                startAutoplay();
+            }
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            // 向右滑动，显示上一张
+            if (!isAnimating) {
+                clearInterval(autoplayInterval);
+                goToSlide(currentIndex - 1);
+                startAutoplay();
+            }
+        }
+    }
 }

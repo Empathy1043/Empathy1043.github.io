@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     h1, #currentDateTime { text-align: center; margin-bottom: 16px; }
     body { font-family: 'Poppins', sans-serif; background: #eefaf2; color: #1b4332; padding: 16px; }
-    .dashboard { display: flex; flex-direction: column; gap: 16px; max-width: 1600px; margin: auto; }
+    .dashboard { display: flex; flex-direction: column; gap: 16px; max-width: 1600px; margin: auto; padding-top: 20px; }
     #currentDateTime { font-size: 1rem; color: #555; }
     .kpi-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
     .kpi { background: rgba(255,255,255,0.9); border-radius:8px; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column; justify-content:space-between; }
@@ -46,10 +46,46 @@
     @media (max-width: 900px) {
       .middle { grid-template-columns:1fr; }
     }
+
+    /* 添加回首页按钮样式 */
+    .home-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #4caf50;
+        border-radius: 50px;
+        padding: 10px 20px;
+        color: #1b4332;
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    .home-button:hover {
+        background: #4caf50;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(76, 175, 80, 0.2);
+    }
+
+    .home-button i {
+        font-size: 1.2em;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <a href="index.html" class="home-button">
+    <i class="fas fa-home"></i>
+    返回首页
+  </a>
   <section class="dashboard">
     <h1>广东省红树林数字化监测看板</h1>
     <div id="currentDateTime">当前日期和时间：--</div>
